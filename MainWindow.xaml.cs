@@ -21,6 +21,7 @@ namespace MSCPLAYER
     /// <summary>
     /// Logika interakcji dla klasy MainWindow.xaml
     /// </summary>
+
     public partial class MainWindow : Window
     {
         public static string Path_Music = @"C:\Users\wince\Desktop\muzyka\";
@@ -52,7 +53,6 @@ namespace MSCPLAYER
                 }
             }
         }
-
         private void Load_music_to_list()
         {
             music_list.Items.Clear();
@@ -111,7 +111,8 @@ namespace MSCPLAYER
 
         private void Toggle_button_play_stop_Checked(object sender, RoutedEventArgs e)
         {
-            
+            //comment
+
             mediaPlayer.Pause();
         }
 
