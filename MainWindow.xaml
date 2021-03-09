@@ -12,6 +12,33 @@
         <TabControl SelectionChanged="TabControl_SelectionChanged">
             <TabItem x:Name="Page_1" Header="Page_1">
                 <Grid>
+                    <Expander x:Name="Expander_playlist" Header="wszystkie piosenki" Expanded="Expander_playlist_Expanded" HorizontalAlignment="Left" Height="208" Margin="430,58,0,0" VerticalAlignment="Top" Width="329">
+                        <StackPanel Background="#FFE5E5E5">
+                            <ListBox Height="78" x:Name="Listbox_playlist"  SelectionMode="Single"  MouseDoubleClick="Listbox_playlist_MouseDoubleClick" Margin="0,0,-0.2,0" SelectionChanged="Listbox_playlist_SelectionChanged_1" >
+                                <ListBox.ContextMenu>
+                                    <ContextMenu>
+
+                                        <MenuItem x:Name="delete_Listbox_playlist_menuitem" Header="Delete" Click="Delete_Listbox_playlist_menuitem_Click"/>
+                                    </ContextMenu>
+                                </ListBox.ContextMenu>
+                            </ListBox>
+                        </StackPanel>
+                    </Expander>
+                    <Button x:Name="Next_music_button" Click="Next_music_button_Click" Content="⏭" FontSize="20" Background="Transparent" HorizontalAlignment="Left" Margin="200,299,0,0" VerticalAlignment="Top" Width="53" Height="40"/>
+                    <Button x:Name="Previous_music_button" Click="Previous_music_button_Click" Content="⏮" FontSize="20" Background="Transparent" Margin="58,299,677,53"/>
+                    <Button x:Name="Mix_music_button" Click="Mix_music_button_Click" Content="🔀" FontSize="20" Background="Transparent" HorizontalAlignment="Left" Margin="341,299,0,0" VerticalAlignment="Top" Width="40" Height="40"/>
+                    <Label x:Name="Current_music_label" Content="Label" HorizontalAlignment="Left" Margin="19,32,0,0" VerticalAlignment="Top" Width="350"/>
+                    <Slider x:Name="Volume_Slider" Maximum="1" Value="1" ValueChanged="Volume_Slider_ValueChanged" RenderTransformOrigin="1.017,1.17" Margin="277,188,394,179">
+                        <Slider.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="269.701"/>
+                                <TranslateTransform X="15.029" Y="-119.048"/>
+                            </TransformGroup>
+                        </Slider.RenderTransform>
+                    </Slider>
+                    <Slider x:Name="Time_Slider" Width="350" Thumb.DragCompleted="Time_Slider_DragCompleted" Thumb.DragStarted="Time_Slider_DragStarted" ValueChanged="Time_Slider_ValueChanged"  Margin="19,271,419,98"/>
                     <ListBox x:Name="music_list" ContextMenuOpening="Music_list_ContextMenuOpening" HorizontalAlignment="Left" FontSize="13" Height="208" Margin="5,58,0,0" VerticalAlignment="Top" Width="376" ItemsSource="{Binding YourItems}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single"  MouseDoubleClick="Music_list_MouseDoubleClick" MouseRightButtonDown="Music_list_MouseRightButtonDown" SelectionChanged="Music_list_SelectionChanged" Background="Transparent" >
                         <ListBox.ContextMenu>
                             <ContextMenu>
@@ -24,15 +51,22 @@
                             </ContextMenu>
                         </ListBox.ContextMenu>
                     </ListBox>
-                    <ToggleButton x:Name="toggle_button_play_stop" Content = "play" FontSize="20" Background="Transparent" Checked="Toggle_button_play_stop_Checked" Unchecked="Toggle_button_play_stop_Unchecked"  Margin="490,120,138.6,211" RenderTransformOrigin="0.5,0.504">
+                    <ToggleButton x:Name="toggle_button_play_stop" Content = "play" FontSize="20" Background="Transparent" Checked="Toggle_button_play_stop_Checked" Unchecked="Toggle_button_play_stop_Unchecked"  Margin="128,299,607,53" RenderTransformOrigin="0.5,0.504">
                     </ToggleButton>
+
+
+
+
                 </Grid>
             </TabItem>
             <TabItem x:Name="Page_2" Header="Page_2">
                 <Grid>
-                    
+
                 </Grid>
             </TabItem>
+
+
+
         </TabControl>
     </Grid>
 </Window>

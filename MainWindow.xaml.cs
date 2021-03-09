@@ -126,5 +126,65 @@ namespace MSCPLAYER
         {
 
         }
+
+        private void Time_Slider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+
+        }
+
+        private void Time_Slider_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+
+        }
+
+        private void Time_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void Volume_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void Previous_music_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Stop_music_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Next_music_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Mix_music_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Expander_playlist_Expanded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Delete_Listbox_playlist_menuitem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Listbox_playlist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void Listbox_playlist_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
