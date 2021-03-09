@@ -121,5 +121,10 @@ namespace MSCPLAYER
             toggle_button_play_stop.Content = "||";
             mediaPlayer.Play();
         }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
