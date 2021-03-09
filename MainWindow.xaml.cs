@@ -24,7 +24,7 @@ namespace MSCPLAYER
 
     public partial class MainWindow : Window
     {
-        public static string Path_Music = @"C:\Users\wince\Desktop\muzyka\";
+        public static string Path_Music = @"C:\muzyka\";
         MediaPlayer mediaPlayer = new MediaPlayer();//objekt  związany z muzyką 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -39,7 +39,7 @@ namespace MSCPLAYER
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
-            PlayMusic(1);
+            PlayMusic(0);
             mediaPlayer.Play();
         }
 
@@ -49,7 +49,7 @@ namespace MSCPLAYER
             {
                 if (mediaPlayer.Source != null)
                 {
-                    
+
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace MSCPLAYER
         {
             if (System.IO.File.Exists(@"" + Path_Music + music_list.Items[index].ToString()))
             {
-                mediaPlayer.Open(new Uri(@"" + Path_Music + music_list.Items[index].ToString()));
+              mediaPlayer.Open(new Uri(@"" + Path_Music + music_list.Items[index].ToString()));
             }
             else
             {
@@ -112,12 +112,13 @@ namespace MSCPLAYER
         private void Toggle_button_play_stop_Checked(object sender, RoutedEventArgs e)
         {
             //comment
-
+            toggle_button_play_stop.Content = "➤";
             mediaPlayer.Pause();
         }
 
         private void Toggle_button_play_stop_Unchecked(object sender, RoutedEventArgs e)
         {
+            toggle_button_play_stop.Content = "||";
             mediaPlayer.Play();
         }
     }
