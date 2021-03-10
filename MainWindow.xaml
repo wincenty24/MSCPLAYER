@@ -53,15 +53,11 @@
                     </ListBox>
                     <ToggleButton x:Name="toggle_button_play_stop" Content = "play" FontSize="20" Background="Transparent" Checked="Toggle_button_play_stop_Checked" Unchecked="Toggle_button_play_stop_Unchecked"  Margin="128,299,607,48" RenderTransformOrigin="0.5,0.504">
                     </ToggleButton>
-
-
-
-
                 </Grid>
             </TabItem>
             <TabItem x:Name="Page_2" Header="Page_2">
                 <Grid>
-
+                    
                 </Grid>
             </TabItem>
 
