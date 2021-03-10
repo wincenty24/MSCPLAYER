@@ -39,43 +39,69 @@ namespace MSCPLAYER
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
-            PlayMusic(0);
-            mediaPlayer.Play();
-            
+            music_list.Items.MoveCurrentToPosition(0);
+
+            PlayMusic(); 
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine($"dupa {mediaPlayer.NaturalDuration.HasTimeSpan}");
-            if (music_list.Items.Count > 0)
+            if ((music_list.Items.Count > 0) && (mediaPlayer.Source != null))
             {
-                if (mediaPlayer.Source != null)
+                Time_Slider.Value = mediaPlayer.Position.TotalSeconds;
+                if (mediaPlayer.NaturalDuration.HasTimeSpan)
                 {
-                    if (mediaPlayer.NaturalDuration.HasTimeSpan)
+                    if ((int)mediaPlayer.Position.TotalSeconds >= (int)mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds)
                     {
-                        Time_Slider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
-                        Console.WriteLine($"Time_Slider.Maximum {Time_Slider.Maximum} mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds {mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds}");
-                        Time_Slider.Value = mediaPlayer.Position.TotalSeconds;
+                        if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
+                        {
+                            move_to_next_song();
+                        }
+                        else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count -1))
+                        {
+                            move_to_first_song();
+                        }
                     }
                 }
             }
         }
+        public void move_to_first_song()
+        {
+            music_list.Items.MoveCurrentToPosition(0);
+            PlayMusic();
+        }
+
+        public void move_to_next_song()
+        {
+            int next_position = music_list.Items.CurrentPosition + 1;
+            music_list.Items.MoveCurrentToPosition(next_position);
+            Time_Slider.Value = 0;
+            PlayMusic();
+        }
+
         private void Load_music_to_list()
         {
             music_list.Items.Clear();
-            DirectoryInfo di = new DirectoryInfo(@"" + Path_Music);// tworzy obiekt di i otwiera zawartość pliku
-            foreach (var fi in di.GetFiles("*.mp3*"))// ,,filtruje" bądź znajduje tylko pliki mp3 w folderze
+            DirectoryInfo di = new DirectoryInfo(@"" + Path_Music);
+            foreach (var fi in di.GetFiles("*.mp3*"))
             {
-                music_list.Items.Add(fi.Name);//zapisuje ów przefiltrowane pliki do listy z muzyką
+                music_list.Items.Add(fi.Name);
             }
         }
-        private void PlayMusic(int index)
+        private void PlayMusic()
         {
-            if (System.IO.File.Exists(@"" + Path_Music + music_list.Items[index].ToString()))
+            if (System.IO.File.Exists(@"" + Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString()))
             {
-        
-                mediaPlayer.Open(new Uri(@"" + Path_Music + music_list.Items[index].ToString()));
-                
+                mediaPlayer.Open(new Uri(@"" + Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString()));
+                mediaPlayer.Play();
+                while (true)
+                {
+                    if (mediaPlayer.NaturalDuration.HasTimeSpan)
+                    {
+                        Time_Slider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                        break;
+                    }
+                }
             }
             else
             {
@@ -150,7 +176,6 @@ namespace MSCPLAYER
 
         private void Time_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Console.WriteLine($"kupa {TimeSpan.FromSeconds(Time_Slider.Value)}");
            
         }
 
@@ -199,4 +224,5 @@ namespace MSCPLAYER
 
         }
     }
+
 }
