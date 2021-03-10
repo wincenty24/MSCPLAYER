@@ -144,7 +144,7 @@ namespace MSCPLAYER
 
         private void Volume_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-
+            mediaPlayer.Volume = (double)Volume_Slider.Value;
         }
 
         private void Previous_music_button_Click(object sender, RoutedEventArgs e)
