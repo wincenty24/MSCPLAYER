@@ -39,7 +39,7 @@ namespace MSCPLAYER
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
-            music_list.Items.MoveCurrentToPosition(41);
+            music_list.Items.MoveCurrentToPosition(0);
 
             PlayMusic(); 
         }
@@ -55,20 +55,30 @@ namespace MSCPLAYER
                     {
                         if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
                         {
-                            int next_position = music_list.Items.CurrentPosition + 1;
-                            music_list.Items.MoveCurrentToPosition(next_position);
-                            Time_Slider.Value = 0 ;
-                            PlayMusic();
+                            move_to_next_song();
                         }
                         else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count -1))
                         {
-                            music_list.Items.MoveCurrentToPosition(0);
-                            PlayMusic();
+                            move_to_first_song();
                         }
                     }
                 }
             }
         }
+        public void move_to_first_song()
+        {
+            music_list.Items.MoveCurrentToPosition(0);
+            PlayMusic();
+        }
+
+        public void move_to_next_song()
+        {
+            int next_position = music_list.Items.CurrentPosition + 1;
+            music_list.Items.MoveCurrentToPosition(next_position);
+            Time_Slider.Value = 0;
+            PlayMusic();
+        }
+
         private void Load_music_to_list()
         {
             music_list.Items.Clear();
