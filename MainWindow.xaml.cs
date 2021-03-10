@@ -88,6 +88,13 @@ namespace MSCPLAYER
             {
 
                 mediaPlayer.Open(new Uri(@"" + Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString()));
+                Console.WriteLine($"duap {mediaPlayer.NaturalDuration.HasTimeSpan}");
+                if (mediaPlayer.NaturalDuration.HasTimeSpan)
+                {
+                    Console.WriteLine($"duap {mediaPlayer.NaturalDuration.HasTimeSpan}");
+
+                   Console.WriteLine($"duap {(int)mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds}");
+                }
                 mediaPlayer.Play();
             }
             else
