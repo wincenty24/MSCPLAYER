@@ -39,17 +39,37 @@ namespace MSCPLAYER
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
-            PlayMusic(0);
+            music_list.Items.MoveCurrentToPosition(1);
+            PlayMusic();
+            mediaPlayer.Position = TimeSpan.FromSeconds(150);
+
             mediaPlayer.Play();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            
             if (music_list.Items.Count > 0)
             {
-                if (mediaPlayer.Source != null)
+                if ((mediaPlayer.Source != null))
                 {
 
+                    Console.WriteLine($" {mediaPlayer.NaturalDuration.HasTimeSpan} ");
+                    if ((int)mediaPlayer.Position.TotalSeconds >= (int)mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds)
+                    {
+                        Console.WriteLine($"mediaPlayer.Position.TotalSeconds{mediaPlayer.Position.TotalSeconds}, mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds {(int)mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds}");
+                        Console.WriteLine($"music_list.Items.CurrentPosition {music_list.Items.CurrentPosition}, music_list.Items.Count {music_list.Items.Count} ");
+                        if ((int)music_list.Items.CurrentPosition <= (int)music_list.Items.Count)
+                        {
+                            int next_position = music_list.Items.CurrentPosition + 1;
+                            music_list.Items.MoveCurrentToPosition(next_position);
+                            PlayMusic();
+                        }
+                        else if ((int)music_list.Items.CurrentPosition <= (int)music_list.Items.Count)
+                        {
+
+                        }
+                    }
                 }
             }
         }
@@ -62,11 +82,13 @@ namespace MSCPLAYER
                 music_list.Items.Add(fi.Name);//zapisuje ów przefiltrowane pliki do listy z muzyką
             }
         }
-        private void PlayMusic(int index)
+        private void PlayMusic()
         {
-            if (System.IO.File.Exists(@"" + Path_Music + music_list.Items[index].ToString()))
+            if (System.IO.File.Exists(@"" + Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString()))
             {
-              mediaPlayer.Open(new Uri(@"" + Path_Music + music_list.Items[index].ToString()));
+
+                mediaPlayer.Open(new Uri(@"" + Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString()));
+                mediaPlayer.Play();
             }
             else
             {
@@ -187,4 +209,5 @@ namespace MSCPLAYER
 
         }
     }
+
 }
