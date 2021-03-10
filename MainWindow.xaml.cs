@@ -41,15 +41,22 @@ namespace MSCPLAYER
             timer.Start();
             PlayMusic(0);
             mediaPlayer.Play();
+            
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            Console.WriteLine($"dupa {mediaPlayer.NaturalDuration.HasTimeSpan}");
             if (music_list.Items.Count > 0)
             {
                 if (mediaPlayer.Source != null)
                 {
-
+                    if (mediaPlayer.NaturalDuration.HasTimeSpan)
+                    {
+                        Time_Slider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                        Console.WriteLine($"Time_Slider.Maximum {Time_Slider.Maximum} mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds {mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds}");
+                        Time_Slider.Value = mediaPlayer.Position.TotalSeconds;
+                    }
                 }
             }
         }
@@ -66,7 +73,9 @@ namespace MSCPLAYER
         {
             if (System.IO.File.Exists(@"" + Path_Music + music_list.Items[index].ToString()))
             {
-              mediaPlayer.Open(new Uri(@"" + Path_Music + music_list.Items[index].ToString()));
+        
+                mediaPlayer.Open(new Uri(@"" + Path_Music + music_list.Items[index].ToString()));
+                
             }
             else
             {
@@ -129,17 +138,20 @@ namespace MSCPLAYER
 
         private void Time_Slider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
+            mediaPlayer.Position = TimeSpan.FromSeconds(Time_Slider.Value);
+            mediaPlayer.Play();
 
         }
 
         private void Time_Slider_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
-
+            mediaPlayer.Pause(); 
         }
 
         private void Time_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-
+            Console.WriteLine($"kupa {TimeSpan.FromSeconds(Time_Slider.Value)}");
+           
         }
 
         private void Volume_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
