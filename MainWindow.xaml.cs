@@ -21,6 +21,7 @@ namespace MSCPLAYER
     /// <summary>
     /// Logika interakcji dla klasy MainWindow.xaml
     /// </summary>
+    /// /// cobuvbulbh
 
     public partial class MainWindow : Window
     {
