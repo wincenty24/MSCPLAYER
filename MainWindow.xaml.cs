@@ -28,7 +28,8 @@ namespace MSCPLAYER
         public static string Path_Music = @"C:\muzyka\";
         MediaPlayer mediaPlayer = new MediaPlayer();//objekt  związany z muzyką 
         DispatcherTimer timer = new DispatcherTimer();
-
+        public static bool random_Song = false;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -47,25 +48,51 @@ namespace MSCPLAYER
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if ((music_list.Items.Count > 0) && (mediaPlayer.Source != null))
+            if (random_Song == false)
             {
-                Time_Slider.Value = mediaPlayer.Position.TotalSeconds;
-                if (mediaPlayer.NaturalDuration.HasTimeSpan)
+                if ((music_list.Items.Count > 0) && (mediaPlayer.Source != null))
                 {
-                    if ((int)mediaPlayer.Position.TotalSeconds >= (int)mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds)
+                    Time_Slider.Value = mediaPlayer.Position.TotalSeconds;
+                    if (mediaPlayer.NaturalDuration.HasTimeSpan)
                     {
-                        if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
+                        if ((int)mediaPlayer.Position.TotalSeconds >= (int)mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds)
                         {
-                            move_to_next_song();
+                            if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
+                            {
+                                move_to_next_song();
+                            }
+                            else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count - 1))
+                            {
+                                move_to_first_song();
+                            }
                         }
-                        else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count - 1))
+
+                    }
+                }
+            }
+            else if (random_Song == true) 
+            {
+                if ((music_list.Items.Count > 0) && (mediaPlayer.Source != null))
+                {
+                    Time_Slider.Value = mediaPlayer.Position.TotalSeconds;
+                    if (mediaPlayer.NaturalDuration.HasTimeSpan)
+                    {
+                        if ((int)mediaPlayer.Position.TotalSeconds >= (int)mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds)
+
                         {
-                            move_to_first_song();
+                            if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
+                            {
+                                move_to_next_song_random();
+                            }
+                            else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count - 1))
+                            {
+                                move_to_first_song();
+                            }
                         }
                     }
                 }
             }
-        }
+        }   
        public void move_to_previous_song()
         {
             int previous_position = music_list.Items.CurrentPosition - 1;
@@ -73,12 +100,20 @@ namespace MSCPLAYER
             Time_Slider.Value = 0;
             PlayMusic();
         }
+       
         public void move_to_first_song()
         {
             music_list.Items.MoveCurrentToPosition(0);
             PlayMusic();
         }
-
+        public void move_to_next_song_random()
+        {
+            Random rand = new Random();
+            int next_position_random = rand.Next(0, music_list.Items.Count);
+            music_list.Items.MoveCurrentToPosition(next_position_random);
+            Time_Slider.Value = 0;
+            PlayMusic();
+        }
         public void move_to_next_song()
         {
             int next_position = music_list.Items.CurrentPosition + 1;
@@ -201,7 +236,7 @@ namespace MSCPLAYER
         {
          if ((int)music_list.Items.CurrentPosition > 0)
             {
-                move_to_previous_song();
+                move_to_previous_song(); 
             }
             else if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
             {
@@ -215,13 +250,29 @@ namespace MSCPLAYER
        
         private void Next_music_button_Click(object sender, RoutedEventArgs e)
         {
-            if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
+
+            if(random_Song == false)
             {
-                move_to_next_song();
+                if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
+                {
+                    move_to_next_song();
+                }
+                else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count - 1))
+                {
+                    move_to_first_song();
+                }
             }
-            else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count - 1))
+            else if(random_Song == true)
             {
-                move_to_first_song();
+                if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
+                {
+                    move_to_next_song_random();
+                }
+                else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count - 1))
+                {
+                    move_to_first_song();
+                }
+
             }
             
             
@@ -229,7 +280,15 @@ namespace MSCPLAYER
 
         private void Mix_music_button_Click(object sender, RoutedEventArgs e)
         {
-
+            if (random_Song == false)
+            {
+                random_Song = true;
+            }
+            else if (random_Song == true)
+            {
+                random_Song = false;
+            }
+            Console.WriteLine(random_Song);
         }
        
         private void Expander_playlist_Expanded(object sender, RoutedEventArgs e)
