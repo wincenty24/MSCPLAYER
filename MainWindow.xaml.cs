@@ -194,7 +194,12 @@ namespace MSCPLAYER
 
         private void Previous_music_button_Click(object sender, RoutedEventArgs e)
         {
-            if ((int)music_list.Items.CurrentPosition > 0)
+            mediaPlayer.Position = TimeSpan.FromSeconds(Time_Slider.Value = 0);
+            mediaPlayer.Play();
+        }
+        private void Previous_music_button_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+         if ((int)music_list.Items.CurrentPosition > 0)
             {
                 move_to_previous_song();
             }
@@ -202,14 +207,12 @@ namespace MSCPLAYER
             {
                 move_to_first_song();
             }
-            
         }
-
         private void Stop_music_button_Click(object sender, RoutedEventArgs e)
         {
 
         }
-
+       
         private void Next_music_button_Click(object sender, RoutedEventArgs e)
         {
             if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
@@ -228,7 +231,7 @@ namespace MSCPLAYER
         {
 
         }
-
+       
         private void Expander_playlist_Expanded(object sender, RoutedEventArgs e)
         {
 
@@ -248,6 +251,8 @@ namespace MSCPLAYER
         {
 
         }
+
+       
     }
 
 }
