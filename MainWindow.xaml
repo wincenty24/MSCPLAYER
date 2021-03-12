@@ -28,7 +28,7 @@
                     <Button x:Name="Previous_music_button" Click="Previous_music_button_Click" Content="⏮" FontSize="20" Background="Transparent" Margin="58,299,677,48"/>
                     <Button x:Name="Mix_music_button" Click="Mix_music_button_Click" Content="🔀" FontSize="20" Background="Transparent" HorizontalAlignment="Left" Margin="290,299,0,0" VerticalAlignment="Top" Width="51" Height="45"/>
                     <Label x:Name="Current_music_label" Content="Label" HorizontalAlignment="Left" Margin="19,32,0,0" VerticalAlignment="Top" Width="350"/>
-                    <Slider x:Name="Volume_Slider" Minimum="0" Maximum="1" Value="1" ValueChanged="Volume_Slider_ValueChanged" RenderTransformOrigin="1.017,1.17" Margin="277,188,394,179">
+                    <Slider x:Name="Volume_Slider" Minimum="0" Maximum="1" Value="0.5" ValueChanged="Volume_Slider_ValueChanged" RenderTransformOrigin="1.017,1.17" Margin="277,188,394,179">
                         <Slider.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
