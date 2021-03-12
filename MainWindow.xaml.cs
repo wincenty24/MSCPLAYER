@@ -198,7 +198,7 @@ namespace MSCPLAYER
             {
                 move_to_previous_song();
             }
-            else if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
+            else if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1) || (int)music_list.Items.CurrentPosition > 0)
             {
                 move_to_first_song();
             }
