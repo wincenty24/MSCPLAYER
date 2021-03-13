@@ -191,7 +191,7 @@ namespace MSCPLAYER
 
         private void Stop_music_button_Click(object sender, RoutedEventArgs e)
         {
-
+           
         }
 
         private void Next_music_button_Click(object sender, RoutedEventArgs e)
@@ -201,7 +201,20 @@ namespace MSCPLAYER
 
         private void Mix_music_button_Click(object sender, RoutedEventArgs e)
         {
+            if (music_list.Items.Count > 0)
+            {
+                int curret_pos = music_list.Items.CurrentPosition;
+                int count = this.music_list.Items.Count;
+                Random randomiser = new Random();
+                object item;
 
+                for (int index = curret_pos + 1; index <= count - 2; index++)
+                {
+                    item = this.music_list.Items[randomiser.Next(index, count)];
+                    this.music_list.Items.Remove(item);
+                    this.music_list.Items.Insert(index, item);
+                }
+            }
         }
 
         private void Expander_playlist_Expanded(object sender, RoutedEventArgs e)
@@ -232,39 +245,6 @@ namespace MSCPLAYER
         private void By_author_sort_button_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void Mix_sort_button_Click(object sender, RoutedEventArgs e)
-        {
-            if (music_list.Items.Count != 0)
-            {
-                int curret_pos = music_list.Items.CurrentPosition;
-                int count = this.music_list.Items.Count;
-                Random randomiser = new Random();
-                object item;
-
-                List<string> support_list = new List<string>();
-                for(int i = curret_pos + 1; i < count - 1; i++)
-                {
-                    support_list.Add( music_list.Items[i].ToString());
-                    Console.WriteLine(music_list.Items[i].ToString());
-                }
-
-              
-
-                for (int index = curret_pos + 1; index <= count - 2; index++)
-                {
-                    item = this.music_list.Items[randomiser.Next(index, count)];
-                    this.music_list.Items.Remove(item);
-                    this.music_list.Items.Insert(index, item);
-                    foreach (string str in music_list.Items)
-                    {
-                        //listcollections.Add(str);
-                        search_box.CharacterCasing = CharacterCasing.Lower;
-                    }
-                    // music_list.Items.MoveCurrentToPosition(curret_pos);
-                }
-            }
         }
     }
 
