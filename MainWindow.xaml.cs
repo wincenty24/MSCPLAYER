@@ -21,6 +21,7 @@ namespace MSCPLAYER
     /// <summary>
     /// Logika interakcji dla klasy MainWindow.xaml
     /// </summary>
+    /// /// cobuvbulbh
 
     public partial class MainWindow : Window
     {
@@ -57,13 +58,20 @@ namespace MSCPLAYER
                         {
                             move_to_next_song();
                         }
-                        else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count -1))
+                        else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count - 1))
                         {
                             move_to_first_song();
                         }
                     }
                 }
             }
+        }
+       public void move_to_previous_song()
+        {
+            int previous_position = music_list.Items.CurrentPosition - 1;
+            music_list.Items.MoveCurrentToPosition(previous_position);
+            Time_Slider.Value = 0;
+            PlayMusic();
         }
         public void move_to_first_song()
         {
@@ -147,13 +155,13 @@ namespace MSCPLAYER
         private void Toggle_button_play_stop_Checked(object sender, RoutedEventArgs e)
         {
             //comment
-            toggle_button_play_stop.Content = "➤";
+            toggle_button_play_stop.Content = "▶️";
             mediaPlayer.Pause();
         }
 
         private void Toggle_button_play_stop_Unchecked(object sender, RoutedEventArgs e)
         {
-            toggle_button_play_stop.Content = "||";
+            toggle_button_play_stop.Content = "⏸️";
             mediaPlayer.Play();
         }
 
@@ -186,17 +194,33 @@ namespace MSCPLAYER
 
         private void Previous_music_button_Click(object sender, RoutedEventArgs e)
         {
-
+            mediaPlayer.Position = TimeSpan.FromSeconds(Time_Slider.Value = 0);
+            mediaPlayer.Play();
         }
-
+        private void Previous_music_button_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+         if ((int)music_list.Items.CurrentPosition > 0)
+            {
+                move_to_previous_song();
+            }
+        }
         private void Stop_music_button_Click(object sender, RoutedEventArgs e)
         {
            
         }
-
+       
         private void Next_music_button_Click(object sender, RoutedEventArgs e)
         {
-
+            if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
+            {
+                move_to_next_song();
+            }
+            else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count - 1))
+            {
+                move_to_first_song();
+            }
+            
+            
         }
 
         private void Mix_music_button_Click(object sender, RoutedEventArgs e)
@@ -216,7 +240,7 @@ namespace MSCPLAYER
                 }
             }
         }
-
+       
         private void Expander_playlist_Expanded(object sender, RoutedEventArgs e)
         {
 
@@ -243,6 +267,16 @@ namespace MSCPLAYER
         }
 
         private void By_author_sort_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void add_Listbox_playlist_menuitem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void add_Listbox_playlist_menuitem_Click_1(object sender, RoutedEventArgs e)
         {
 
         }
