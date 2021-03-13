@@ -191,7 +191,7 @@ namespace MSCPLAYER
 
         private void Stop_music_button_Click(object sender, RoutedEventArgs e)
         {
-
+           
         }
 
         private void Next_music_button_Click(object sender, RoutedEventArgs e)
@@ -201,7 +201,20 @@ namespace MSCPLAYER
 
         private void Mix_music_button_Click(object sender, RoutedEventArgs e)
         {
+            if (music_list.Items.Count > 0)
+            {
+                int curret_pos = music_list.Items.CurrentPosition;
+                int count = this.music_list.Items.Count;
+                Random randomiser = new Random();
+                object item;
 
+                for (int index = curret_pos + 1; index <= count - 2; index++)
+                {
+                    item = this.music_list.Items[randomiser.Next(index, count)];
+                    this.music_list.Items.Remove(item);
+                    this.music_list.Items.Insert(index, item);
+                }
+            }
         }
 
         private void Expander_playlist_Expanded(object sender, RoutedEventArgs e)
@@ -220,6 +233,16 @@ namespace MSCPLAYER
         }
 
         private void Listbox_playlist_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void By_title_sort_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void By_author_sort_button_Click(object sender, RoutedEventArgs e)
         {
 
         }

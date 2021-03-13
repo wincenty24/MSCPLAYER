@@ -12,7 +12,14 @@
         <TabControl SelectionChanged="TabControl_SelectionChanged">
             <TabItem x:Name="Page_1" Header="Page_1">
                 <Grid>
-                    <Expander x:Name="Expander_playlist" Header="wszystkie piosenki" Expanded="Expander_playlist_Expanded" HorizontalAlignment="Left" Height="208" Margin="430,58,0,0" VerticalAlignment="Top" Width="329">
+                    <TextBox Text="Search box" x:Name="search_box" Margin="257,32,407,332.2" />
+                    <Expander x:Name="sort_expander"  Header="Sortowanie" Margin="420,72,266,218" >
+                        <StackPanel>
+                            <Button x:Name="by_title_sort_button" Content="By title" Click="By_title_sort_button_Click" Height="20" Margin="0,0,-0.2,0"></Button>
+                            <Button x:Name="by_author_sort_button" Content="By author" Click="By_author_sort_button_Click"  Height="20" Margin="0,0,-0.2,0"></Button>
+                        </StackPanel>
+                    </Expander>
+                    <Expander x:Name="Expander_playlist" Header="wszystkie piosenki" Expanded="Expander_playlist_Expanded" HorizontalAlignment="Left" Height="208" Margin="577,58,0,0" VerticalAlignment="Top" Width="182">
                         <StackPanel Background="#FFE5E5E5">
                             <ListBox Height="186" x:Name="Listbox_playlist"  SelectionMode="Single"  MouseDoubleClick="Listbox_playlist_MouseDoubleClick" Margin="0,0,0.2,0" SelectionChanged="Listbox_playlist_SelectionChanged_1" >
                                 <ListBox.ContextMenu>
@@ -25,9 +32,9 @@
                         </StackPanel>
                     </Expander>
                     <Button x:Name="Next_music_button" Click="Next_music_button_Click" Content="⏭" FontSize="20" Background="Transparent" HorizontalAlignment="Left" Margin="200,299,0,0" VerticalAlignment="Top" Width="53" Height="45"/>
-                    <Button x:Name="Previous_music_button" Click="Previous_music_button_Click" Content="⏮" FontSize="20" Background="Transparent" Margin="58,299,677,48"/>
+                    <Button x:Name="Previous_music_button"  Click="Previous_music_button_Click" Content="⏮" FontSize="20" Background="Transparent" Margin="58,299,677,48"/>
                     <Button x:Name="Mix_music_button" Click="Mix_music_button_Click" Content="🔀" FontSize="20" Background="Transparent" HorizontalAlignment="Left" Margin="290,299,0,0" VerticalAlignment="Top" Width="51" Height="45"/>
-                    <Label x:Name="Current_music_label" Content="Label" HorizontalAlignment="Left" Margin="19,32,0,0" VerticalAlignment="Top" Width="350"/>
+                    <Label x:Name="Current_music_label" Content="Label" HorizontalAlignment="Left" Margin="19,32,0,0" VerticalAlignment="Top" Width="203" Height="27"/>
                     <Slider x:Name="Volume_Slider" Minimum="0" Maximum="1" Value="1" ValueChanged="Volume_Slider_ValueChanged" RenderTransformOrigin="1.017,1.17" Margin="277,188,394,179">
                         <Slider.RenderTransform>
                             <TransformGroup>
@@ -57,9 +64,12 @@
             </TabItem>
             <TabItem x:Name="Page_2" Header="Page_2">
                 <Grid>
-                    
+
                 </Grid>
             </TabItem>
+            <Expander Header="Expander" Height="407" Width="461">
+                <Grid Background="#FFE5E5E5"/>
+            </Expander>
 
 
 
