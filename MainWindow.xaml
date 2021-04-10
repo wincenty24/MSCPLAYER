@@ -24,8 +24,9 @@
                             <ListBox Height="186" x:Name="Listbox_playlist"  SelectionMode="Single"  MouseDoubleClick="Listbox_playlist_MouseDoubleClick" Margin="0,0,0.2,0" SelectionChanged="Listbox_playlist_SelectionChanged_1" >
                                 <ListBox.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem x:Name="delete_Listbox_playlist_menuitem" Header="Delete" Click="Delete_Listbox_playlist_menuitem_Click"/>
+                                        <TextBox x:Name="plya_list_name_creator_listbox" Text="" Width="100"></TextBox>
                                         <MenuItem x:Name="add_Listbox_playlist_menuitem" Header="Add" Click="add_Listbox_playlist_menuitem_Click_1"/>
+                                        <MenuItem x:Name="delete_Listbox_playlist_menuitem" Header="Delete" Click="Delete_Listbox_playlist_menuitem_Click"/>
                                     </ContextMenu>
                                 </ListBox.ContextMenu>
                             </ListBox>
