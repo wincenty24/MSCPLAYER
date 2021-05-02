@@ -46,26 +46,9 @@ namespace MSCPLAYER
             music_list.Items.MoveCurrentToPosition(0);
 
             mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
-            //PlayMusic(); 
+
         }
-        /*
-        private void load_to_listb()
-        {
-            
-            DirectoryInfo di = new DirectoryInfo(@"" + Path_Music);
-            all_music_list.Clear();
-            foreach (var fi in di.GetFiles("*.mp3*"))
-            {
-                all_music_list.Add(fi.Name);
-        
-                
-            }
-            all_music_list.Sort();
-            Checker check = new Checker();
-            check.check_music_in_path(all_music_list, ref music_list, sort_type);
-     
-        }
-        */
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             
@@ -79,6 +62,9 @@ namespace MSCPLAYER
             }
             if ((music_list.Items.Count > 0) && (mp.media_player.Source != null))
             {
+                Debug.WriteLine(music_list.Items.CurrentItem);
+                Debug.WriteLine(music_list.Items.CurrentPosition);
+                Debug.WriteLine("=================================================================================");
                 mp.assigne_mp_time(Time_Slider);
                 //Time_Slider.Value = mediaPlayer.Position.TotalSeconds;
                 if (mp.media_player.NaturalDuration.HasTimeSpan)
@@ -87,7 +73,7 @@ namespace MSCPLAYER
                     {
                         if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
                         {
-                            mp.move_to_next_song(ref music_list, ref Time_Slider, Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString());
+                            mp.move_to_next_song(ref music_list, ref Time_Slider, Path_Music);
                         }
                         else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count - 1))
                         {
@@ -97,34 +83,7 @@ namespace MSCPLAYER
                 }
             }
         }
-        /*
-        public void move_to_previous_song()
-        {
-            int previous_position = music_list.Items.CurrentPosition - 1;
-            music_list.Items.MoveCurrentToPosition(previous_position);
-            Time_Slider.Value = 0;
-            mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
-            //PlayMusic();
-        }
-        */
-        /*
-        public void move_to_first_song()
-        {
-            music_list.Items.MoveCurrentToPosition(0);
-            mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
-            //PlayMusic();
-        }
-        */
-        /*
-        public void move_to_next_song()
-        {
-            int next_position = music_list.Items.CurrentPosition + 1;
-            music_list.Items.MoveCurrentToPosition(next_position);
-            Time_Slider.Value = 0;
-            mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
-            //PlayMusic();
-        }
-        */
+        
         private void Load_music_to_list()
         {
             
@@ -138,28 +97,6 @@ namespace MSCPLAYER
             }
            
         }
-        /*
-        private void PlayMusic()
-        {
-            if (System.IO.File.Exists(@"" + Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString()))
-            {
-                mediaPlayer.Open(new Uri(@"" + Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString()));
-                mediaPlayer.Play();
-                while (true)
-                {
-                    if (mediaPlayer.NaturalDuration.HasTimeSpan)
-                    {
-                        Time_Slider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("this path does not exist");
-            }
-        }
-        */
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
@@ -182,7 +119,10 @@ namespace MSCPLAYER
 
         private void Music_list_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            int selected_index = music_list.SelectedIndex;
+            string selected_item = music_list.SelectedItem.ToString();
+            mp.play_music(Path_Music+selected_item, ref Time_Slider);
+            music_list.Items.MoveCurrentToPosition(selected_index);
         }
 
         private void Music_list_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -244,7 +184,7 @@ namespace MSCPLAYER
         {
          if ((int)music_list.Items.CurrentPosition > 0)
             {
-                mp.move_to_previous_song(ref music_list ,ref Time_Slider,Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString());
+                mp.move_to_previous_song(ref music_list ,ref Time_Slider, Path_Music);
             }
         }
         private void Stop_music_button_Click(object sender, RoutedEventArgs e)
@@ -256,35 +196,19 @@ namespace MSCPLAYER
         {
             if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
             {
-                mp.move_to_next_song(ref music_list, ref Time_Slider, Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString());
+                Debug.WriteLine("move_to_next_song");
+                mp.move_to_next_song(ref music_list, ref Time_Slider, Path_Music);
             }
             else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count - 1))
             {
+                Debug.WriteLine("move_to_first_song");
                 mp.move_to_first_song(ref music_list, ref Time_Slider, Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString());
             }
-            
-            
         }
 
         private void Mix_music_button_Click(object sender, RoutedEventArgs e)
         {
             mp.mix_music_in_listbox(ref music_list);
-            /*
-            if (music_list.Items.Count > 0)
-            {
-                int curret_pos = music_list.Items.CurrentPosition;
-                int count = this.music_list.Items.Count;
-                Random randomiser = new Random();
-                object item;
-
-                for (int index = curret_pos + 1; index <= count - 2; index++)
-                {
-                    item = this.music_list.Items[randomiser.Next(index, count)];
-                    this.music_list.Items.Remove(item);
-                    this.music_list.Items.Insert(index, item);
-                }
-            }
-            */
         }
        
         private void Expander_playlist_Expanded(object sender, RoutedEventArgs e)
