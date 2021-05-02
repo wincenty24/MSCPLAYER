@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -78,13 +79,13 @@ namespace MSCPLAYER
             }
         }
 
-        public void move_to_previous_song(ref ListBox listbox, ref Slider slider, string direction)
+        public void move_to_previous_song(ref ListBox listbox, ref Slider slider, string path)
         {
             int previous_position = listbox.Items.CurrentPosition - 1;
             listbox.Items.MoveCurrentToPosition(previous_position);
             slider.Value = 0;
-            this.play_music(@"" + direction, ref slider);
-            //PlayMusic();
+            string current_song = listbox.Items[previous_position].ToString();
+            this.play_music(@"" + path + current_song, ref slider);
         }
 
         public void move_to_first_song(ref ListBox listbox, ref Slider slider, string direction)
@@ -92,15 +93,17 @@ namespace MSCPLAYER
             listbox.Items.MoveCurrentToPosition(0);
             slider.Value = 0;
             this.play_music(@"" + direction, ref slider);
-            //PlayMusic();
         }
-        public void move_to_next_song(ref ListBox listbox, ref Slider slider, string direction)
+        public void move_to_next_song(ref ListBox listbox, ref Slider slider, string path)//path
         {
+            Debug.WriteLine($"listbox.Items.CurrentPosition {listbox.Items.CurrentPosition}");
+           
             int next_position = listbox.Items.CurrentPosition + 1;
             listbox.Items.MoveCurrentToPosition(next_position);
+            Debug.WriteLine($"listbox.Items.MoveCurrentToPosition {listbox.Items.CurrentPosition}");
             slider.Value = 0;
-            this.play_music(@"" + direction, ref slider);
-            //PlayMusic();
+            string current_song = listbox.Items[next_position].ToString();
+            this.play_music(@"" + path + current_song, ref slider);
         }
 
     }
