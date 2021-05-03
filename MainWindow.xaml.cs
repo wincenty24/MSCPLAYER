@@ -136,7 +136,7 @@ namespace MSCPLAYER
             }
             
             //music_list_add_listbox_contextmenu.SelectedItem = -1;
-            music_list_add_listbox_contextmenu.UnselectAll();
+        
             //sprawdzanie która jest pozycja w liscie playlist
             //zrób funkcje
 
