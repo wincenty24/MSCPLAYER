@@ -96,11 +96,8 @@ namespace MSCPLAYER
         }
         public void move_to_next_song(ref ListBox listbox, ref Slider slider, string path)//path
         {
-            Debug.WriteLine($"listbox.Items.CurrentPosition {listbox.Items.CurrentPosition}");
-           
             int next_position = listbox.Items.CurrentPosition + 1;
             listbox.Items.MoveCurrentToPosition(next_position);
-            Debug.WriteLine($"listbox.Items.MoveCurrentToPosition {listbox.Items.CurrentPosition}");
             slider.Value = 0;
             string current_song = listbox.Items[next_position].ToString();
             this.play_music(@"" + path + current_song, ref slider);

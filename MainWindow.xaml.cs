@@ -31,7 +31,7 @@ namespace MSCPLAYER
         List<string> all_music_list = new List<string>();
         Sort_TYPE.Sort sort_type = new Sort_TYPE.Sort();
         MP mp = new MP();
-        
+        List<PlayList> playlist = new List<PlayList>();
         public MainWindow()
         {
             InitializeComponent();
@@ -51,9 +51,10 @@ namespace MSCPLAYER
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            
+
             try
             {
+
                 mp.load_to_list(ref all_music_list, ref music_list, sort_type , Path_Music);
             }
             catch
@@ -62,9 +63,9 @@ namespace MSCPLAYER
             }
             if ((music_list.Items.Count > 0) && (mp.media_player.Source != null))
             {
-                Debug.WriteLine(music_list.Items.CurrentItem);
-                Debug.WriteLine(music_list.Items.CurrentPosition);
-                Debug.WriteLine("=================================================================================");
+               // Debug.WriteLine(music_list.Items.CurrentItem);
+                //Debug.WriteLine(music_list.Items.CurrentPosition);
+                //Debug.WriteLine("=================================================================================");
                 mp.assigne_mp_time(Time_Slider);
                 //Time_Slider.Value = mediaPlayer.Position.TotalSeconds;
                 if (mp.media_player.NaturalDuration.HasTimeSpan)
@@ -109,7 +110,40 @@ namespace MSCPLAYER
 
         private void Music_list_add_listbox_contextmenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            string selected_song = music_list.SelectedItem.ToString();
 
+            string selected_playlist;
+            try
+            {
+                selected_playlist = music_list_add_listbox_contextmenu.SelectedItem.ToString();
+                for (int i = 0; i < playlist.Count; i++)
+                {
+                    if (playlist[i].playlist_name == selected_playlist)
+                    {
+                        Debug.WriteLine($"selected playlis{selected_playlist} {playlist[i].playlist_name}");
+                        playlist[i].playlist.Add(selected_song);
+                        Debug.WriteLine($"item in a list {playlist[i].playlist.Count}");
+                        foreach (string dupa in playlist[i].playlist)
+                        {
+                            Debug.WriteLine(dupa);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            
+            //music_list_add_listbox_contextmenu.SelectedItem = -1;
+            music_list_add_listbox_contextmenu.UnselectAll();
+            //sprawdzanie która jest pozycja w liscie playlist
+            //zrób funkcje
+
+
+
+
+            Debug.WriteLine("end");
         }
 
         private void Music_list_ContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -196,12 +230,10 @@ namespace MSCPLAYER
         {
             if ((int)music_list.Items.CurrentPosition < ((int)music_list.Items.Count - 1))
             {
-                Debug.WriteLine("move_to_next_song");
                 mp.move_to_next_song(ref music_list, ref Time_Slider, Path_Music);
             }
             else if ((int)music_list.Items.CurrentPosition >= ((int)music_list.Items.Count - 1))
             {
-                Debug.WriteLine("move_to_first_song");
                 mp.move_to_first_song(ref music_list, ref Time_Slider, Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString());
             }
         }
@@ -247,6 +279,21 @@ namespace MSCPLAYER
         }
 
         private void add_Listbox_playlist_menuitem_Click_1(object sender, RoutedEventArgs e)
+        {
+           //tworzenie nowej playlisty
+           //zrób z tego funckje w klasie plylist
+            Checker check = new Checker();
+            if (plya_list_name_creator_listbox.Text != "" && check.is_playlist_exist(playlist, plya_list_name_creator_listbox.Text))
+            {
+                //Debug.WriteLine("creating playlist status"+ check.is_playlist_exist(playlist, plya_list_name_creator_listbox.Text));
+                playlist.Add(new PlayList(plya_list_name_creator_listbox.Text));
+                Listbox_playlist.Items.Add(plya_list_name_creator_listbox.Text);
+                music_list_add_listbox_contextmenu.Items.Add(plya_list_name_creator_listbox.Text);
+                //playlist[playlist.Count - 1].playlist_name = plya_list_name_creator_listbox.Text;
+            }
+        }
+
+        private void add_menucontext_musiclist_Click(object sender, RoutedEventArgs e)
         {
 
         }

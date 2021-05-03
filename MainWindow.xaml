@@ -51,9 +51,9 @@
                         <ListBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="usuń" Click="Music_list_ItemDelete_Click"/>
-                                <MenuItem Header="dodaj" x:Name="add_menucontext_musiclist">
+                                <MenuItem Header="dodaj" x:Name="add_menucontext_musiclist" Click="add_menucontext_musiclist_Click">
                                     <StackPanel Orientation="Vertical" >
-                                        <ListBox MaxHeight="100" MaxWidth="200" SelectionMode="Single" SelectionChanged="Music_list_add_listbox_contextmenu_SelectionChanged"  x:Name="music_list_add_listbox_contextmenu" />
+                                        <ListBox MaxHeight="100" MaxWidth="200" ItemsSource="{Binding YourItems}" SelectedItem="{Binding SelectedItem}" SelectionMode="Extended" SelectionChanged="Music_list_add_listbox_contextmenu_SelectionChanged"  x:Name="music_list_add_listbox_contextmenu" />
                                     </StackPanel>
                                 </MenuItem>
                             </ContextMenu>

@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Checker.cs" />
     <Compile Include="MP.cs" />
+    <Compile Include="PlayList.cs" />
     <Compile Include="Sort_ENUM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

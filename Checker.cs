@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Diagnostics;
+using System.Windows;
+
 namespace MSCPLAYER
 {
     class Checker
@@ -27,6 +29,43 @@ namespace MSCPLAYER
                     }
                 break;
              }
+        }
+
+        public bool is_playlist_exist(List<PlayList> playlists, string name_playlist)
+        {
+            bool status = false;
+            //Debug.WriteLine("playlistname " + name_playlist);
+            if (playlists.Count > 0)
+            {
+                
+                for (int index =0; index<playlists.Count; index++)
+                {
+                    
+                    if (playlists[index].playlist_name != name_playlist)
+                    {
+                       // Debug.WriteLine("status1 " + playlists[index].playlist_name);
+                        status = true;
+                        
+                    }
+                    else
+                    {
+                       // Debug.WriteLine("status2 " + status);
+                        status = false;
+                    }
+                }
+            }
+            else if (playlists.Count == 0)
+            {
+                //Debug.WriteLine("status3 " + status);
+                status = true;
+            }
+            else
+            {
+                //Debug.WriteLine("status4 " + status);
+                status = false;
+            }
+           // Debug.WriteLine("status5 " + status);
+            return status;
         }
     }
 }
