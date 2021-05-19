@@ -98,5 +98,33 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\back.png" />
+    <Resource Include="Images\bar-graph.png" />
+    <Resource Include="Images\cancel.png" />
+    <Resource Include="Images\checked.png" />
+    <Resource Include="Images\down-arrow.png" />
+    <Resource Include="Images\eject.png" />
+    <Resource Include="Images\equalizer.png" />
+    <Resource Include="Images\fast-forward.png" />
+    <Resource Include="Images\icons8-music-notation-96.png" />
+    <Resource Include="Images\list.png" />
+    <Resource Include="Images\minus.png" />
+    <Resource Include="Images\musical-note.png" />
+    <Resource Include="Images\next-1.png" />
+    <Resource Include="Images\next.png" />
+    <Resource Include="Images\pause.png" />
+    <Resource Include="Images\play-button.png" />
+    <Resource Include="Images\plus.png" />
+    <Resource Include="Images\power-button.png" />
+    <Resource Include="Images\previous.png" />
+    <Resource Include="Images\replay.png" />
+    <Resource Include="Images\rewind.png" />
+    <Resource Include="Images\share.png" />
+    <Resource Include="Images\shuffle-arrows.png" />
+    <Resource Include="Images\speaker.png" />
+    <Resource Include="Images\stop.png" />
+    <Resource Include="Images\up-arrow.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -44,9 +44,9 @@ namespace MSCPLAYER
             timer.Tick += Timer_Tick;
             timer.Start();
             music_list.Items.MoveCurrentToPosition(0);
-
+            
             mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
-
+            mp.media_player.Pause();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -63,9 +63,10 @@ namespace MSCPLAYER
             }
             if ((music_list.Items.Count > 0) && (mp.media_player.Source != null))
             {
-               // Debug.WriteLine(music_list.Items.CurrentItem);
-                //Debug.WriteLine(music_list.Items.CurrentPosition);
-                //Debug.WriteLine("=================================================================================");
+                Current_music_label.Content = $"Now is playing - {music_list.Items.CurrentItem}";
+               Debug.WriteLine(music_list.Items.CurrentItem);
+               Debug.WriteLine(music_list.Items.CurrentPosition);
+               Debug.WriteLine("=================================================================================");
                 mp.assigne_mp_time(Time_Slider);
                 //Time_Slider.Value = mediaPlayer.Position.TotalSeconds;
                 if (mp.media_player.NaturalDuration.HasTimeSpan)
@@ -296,6 +297,24 @@ namespace MSCPLAYER
         private void add_menucontext_musiclist_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Repeat_music_button_Click (object sender, RoutedEventArgs e)
+        {
+            
+          //  if ((int)mp.media_player.Position.TotalSeconds >= (int)mp.media_player.NaturalDuration.TimeSpan.TotalSeconds)
+           // {
+          //      mp.media_player.Position = TimeSpan.FromSeconds(Time_Slider.Value = 0);
+          //      mp.media_player.Play();
+          //  }
+        }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
         }
     }
 
