@@ -47,13 +47,13 @@
                         </Slider.RenderTransform>
                     </Slider>
                     <Slider x:Name="Time_Slider" Thumb.DragCompleted="Time_Slider_DragCompleted" Thumb.DragStarted="Time_Slider_DragStarted" ValueChanged="Time_Slider_ValueChanged"  Margin="19,271,413,93"/>
-                    <ListBox x:Name="music_list" ContextMenuOpening="Music_list_ContextMenuOpening" HorizontalAlignment="Left" FontSize="13" Height="208" Margin="5,58,0,0" VerticalAlignment="Top" Width="376" ItemsSource="{Binding YourItems}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single"  MouseDoubleClick="Music_list_MouseDoubleClick" MouseRightButtonDown="Music_list_MouseRightButtonDown" SelectionChanged="Music_list_SelectionChanged" Background="Transparent" >
+                    <ListBox x:Name="music_list" ContextMenuOpening="Music_list_ContextMenuOpening" HorizontalAlignment="Left" FontSize="13" Height="208" Margin="5,58,0,0" VerticalAlignment="Top" Width="376" ItemsSource="{Binding YourItems}" SelectedItem="{Binding SelectedItem}"   MouseDoubleClick="Music_list_MouseDoubleClick" MouseRightButtonDown="Music_list_MouseRightButtonDown" SelectionChanged="Music_list_SelectionChanged" Background="Transparent" >
                         <ListBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="usuń" Click="Music_list_ItemDelete_Click"/>
                                 <MenuItem Header="dodaj" x:Name="add_menucontext_musiclist" Click="add_menucontext_musiclist_Click">
                                     <StackPanel Orientation="Vertical" >
-                                        <ListBox MaxHeight="100" MaxWidth="200" ItemsSource="{Binding YourItems}" SelectedItem="{Binding SelectedItem}" SelectionMode="Extended" SelectionChanged="Music_list_add_listbox_contextmenu_SelectionChanged"  x:Name="music_list_add_listbox_contextmenu" />
+                                        <ListBox  MaxHeight="100" MaxWidth="200" SelectionChanged="Music_list_add_listbox_contextmenu_SelectionChanged"  x:Name="music_list_add_listbox_contextmenu" />
                                     </StackPanel>
                                 </MenuItem>
                             </ContextMenu>

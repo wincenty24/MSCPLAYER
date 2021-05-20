@@ -39,6 +39,7 @@ namespace MSCPLAYER
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            read_songs_from_txt();
             Load_music_to_list();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
@@ -100,9 +101,56 @@ namespace MSCPLAYER
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
+            save_playlist_to_txt();
         }
+       private void save_playlist_to_txt()
+       {
+            foreach(var item in playlist)
+            {
+                using (TextWriter tw = new StreamWriter($"{item.playlist_name}.txt"))
+                {
 
+                    foreach (string songs in item.playlist)
+                    {
+                        tw.WriteLine(songs);
+                    }
+                }
+            }
+
+       }
+        private void read_songs_from_txt()
+        {
+            DirectoryInfo di = new DirectoryInfo(@"C:\Users\wince\Desktop\MSCPLAYER\bin\Debug\");
+            foreach (var fi in di.GetFiles("*.txt*"))
+            {
+                //all_music_list.Add(fi.Name);
+                
+                Checker check = new Checker();
+                if (check.is_playlist_exist(playlist, fi.Name.Replace(".txt","")))
+                {
+                    //Debug.WriteLine("creating playlist status"+ check.is_playlist_exist(playlist, plya_list_name_creator_listbox.Text));
+                    playlist.Add(new PlayList(fi.Name.Replace(".txt", "")));
+                    Listbox_playlist.Items.Add(fi.Name.Replace(".txt", ""));
+                    music_list_add_listbox_contextmenu.Items.Add(fi.Name.Replace(".txt", ""));
+                    //playlist[playlist.Count - 1].playlist_name = plya_list_name_creator_listbox.Text;
+                }
+
+
+                Debug.WriteLine(fi.Name);
+                string line;
+
+                // Read the file and display it line by line.  
+                System.IO.StreamReader file =
+                    new System.IO.StreamReader($@"C:\Users\wince\Desktop\MSCPLAYER\bin\Debug\{fi.Name}");
+                while ((line = file.ReadLine()) != null)
+                {
+                    playlist[playlist.Count - 1].playlist.Add(line);
+                    Debug.WriteLine(line);
+                }
+
+                file.Close();
+            }
+        }
         private void Music_list_ItemDelete_Click(object sender, RoutedEventArgs e)
         {
 
@@ -110,40 +158,41 @@ namespace MSCPLAYER
 
         private void Music_list_add_listbox_contextmenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string selected_song = music_list.SelectedItem.ToString();
-
-            string selected_playlist;
             try
             {
-                selected_playlist = music_list_add_listbox_contextmenu.SelectedItem.ToString();
-                for (int i = 0; i < playlist.Count; i++)
+                if (music_list_add_listbox_contextmenu.SelectedItem != null)
                 {
-                    if (playlist[i].playlist_name == selected_playlist)
+                    string selected_song = music_list.SelectedItem.ToString();
+
+                    string selected_playlist;
+
+
+                    selected_playlist = music_list_add_listbox_contextmenu.SelectedItem.ToString();
+
+
+                    //selected_playlist = music_list_add_listbox_contextmenu.SelectedItem.ToString();
+                    for (int i = 0; i < playlist.Count; i++)
                     {
-                        Debug.WriteLine($"selected playlis{selected_playlist} {playlist[i].playlist_name}");
-                        playlist[i].playlist.Add(selected_song);
-                        Debug.WriteLine($"item in a list {playlist[i].playlist.Count}");
-                        foreach (string dupa in playlist[i].playlist)
+                         if (playlist[i].playlist_name == selected_playlist)
                         {
-                            Debug.WriteLine(dupa);
+                            //Debug.WriteLine($"selected playlis{selected_playlist} {playlist[i].playlist_name}");
+                            playlist[i].playlist.Add(selected_song);
+
+                           // Debug.WriteLine($"item in a list {playlist[i].playlist.Count}");
+                            foreach (string dupa in playlist[i].playlist)
+                            {
+                                Debug.WriteLine(dupa);
+                            }
                         }
                     }
+                    music_list_add_listbox_contextmenu.UnselectAll();
                 }
+
             }
             catch
             {
 
             }
-            
-            //music_list_add_listbox_contextmenu.SelectedItem = -1;
-        
-            //sprawdzanie która jest pozycja w liscie playlist
-            //zrób funkcje
-
-
-
-
-            Debug.WriteLine("end");
         }
 
         private void Music_list_ContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -297,6 +346,8 @@ namespace MSCPLAYER
         {
 
         }
+
+
     }
 
 }
