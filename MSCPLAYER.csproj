@@ -126,5 +126,17 @@
     <Resource Include="Images\stop.png" />
     <Resource Include="Images\up-arrow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-macos-close-90.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-macos-minimize-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="mute.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-mute-64.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -316,6 +316,21 @@ namespace MSCPLAYER
                 DragMove();
             }
         }
+
+        private void Close_button_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void Minimize_button_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void Mute_button_Click(object sender, RoutedEventArgs e)
+        {
+            Volume_Slider.Value=0;
+        }
     }
 
 }
