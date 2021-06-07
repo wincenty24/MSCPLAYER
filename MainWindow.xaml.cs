@@ -32,6 +32,7 @@ namespace MSCPLAYER
         Sort_TYPE.Sort sort_type = new Sort_TYPE.Sort();
         MP mp = new MP();
         List<PlayList> playlist = new List<PlayList>();
+        string current_playlist = "all_songs"; 
         public MainWindow()
         {
             InitializeComponent();
@@ -39,15 +40,76 @@ namespace MSCPLAYER
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
+            current_playlist = Properties.Settings.Default.save_last_playlist;
+            
+            Listbox_playlist.Items.Add("all_songs");
+            if (current_playlist == "all_songs")
+                Load_music_to_list();
+
             read_songs_from_txt();
-            Load_music_to_list();
+
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
-            music_list.Items.MoveCurrentToPosition(0);
+           
+            load_to_music_list(ref music_list);
 
+            load_last_song_from_memory(ref music_list, Properties.Settings.Default.save_last_song);
+        
             mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
 
+
+        }
+        public void load_last_song_from_memory(ref ListBox listbox, string song_name )
+        {
+            if (listbox.Items.Contains(song_name))
+            {
+                for( int index =0; index< listbox.Items.Count; index++)
+                {
+                    if (listbox.Items[index].ToString() == song_name)
+                    {
+                        listbox.Items.MoveCurrentToPosition(index);
+                    }
+                }
+            }
+            else
+            {
+                listbox.Items.MoveCurrentToPosition(0);
+            }
+            //return 0;
+        }
+
+        public void load_to_music_list(ref ListBox listbox)
+        {
+            Checker checker = new Checker();
+            if (checker.is_playlist_exist(playlist, current_playlist))
+            {
+                Expander_playlist.Header = current_playlist;
+                foreach (var pl in playlist)
+                {
+                    if (pl.playlist_name == current_playlist)
+                    {
+                        foreach (string song in pl.playlist)
+                        {
+                            listbox.Items.Add(song);
+                        }
+                    }
+                }
+                
+            }
+            else
+            {
+                Load_music_to_list();
+                Expander_playlist.Header = "all_songs";
+                foreach (string song in all_music_list)
+                {
+                    listbox.Items.Add(song);
+                    listbox.Items.MoveCurrentToFirst();
+                }
+                
+            }
+            
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -55,8 +117,8 @@ namespace MSCPLAYER
 
             try
             {
-
-                mp.load_to_list(ref all_music_list, ref music_list, sort_type , Path_Music);
+                if (current_playlist == "all_songs") 
+                    mp.load_to_list(ref all_music_list, ref music_list, sort_type , Path_Music);
             }
             catch
             {
@@ -64,7 +126,7 @@ namespace MSCPLAYER
             }
             if ((music_list.Items.Count > 0) && (mp.media_player.Source != null))
             {
-               // Debug.WriteLine(music_list.Items.CurrentItem);
+                //Debug.WriteLine(music_list.Items.CurrentItem);
                 //Debug.WriteLine(music_list.Items.CurrentPosition);
                 //Debug.WriteLine("=================================================================================");
                 mp.assigne_mp_time(Time_Slider);
@@ -85,7 +147,7 @@ namespace MSCPLAYER
                 }
             }
         }
-        
+
         private void Load_music_to_list()
         {
             
@@ -94,14 +156,25 @@ namespace MSCPLAYER
             DirectoryInfo di = new DirectoryInfo(@"" + Path_Music);
             foreach (var fi in di.GetFiles("*.mp3*"))
             {
-                //all_music_list.Add(fi.Name);
-                music_list.Items.Add(fi.Name);
+                all_music_list.Add(fi.Name);
+                if( current_playlist == "all_songs")
+                    music_list.Items.Add(fi.Name);
             }
            
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             save_playlist_to_txt();
+
+
+
+            Properties.Settings.Default.save_last_playlist=current_playlist;
+            Properties.Settings.Default.save_last_song = music_list.Items.CurrentItem.ToString();
+
+
+            Properties.Settings.Default.Save();
+
+
         }
        private void save_playlist_to_txt()
        {
@@ -126,7 +199,7 @@ namespace MSCPLAYER
                 //all_music_list.Add(fi.Name);
                 
                 Checker check = new Checker();
-                if (check.is_playlist_exist(playlist, fi.Name.Replace(".txt","")))
+                if (  check.is_playlist_exist(playlist, fi.Name.Replace(".txt","")))
                 {
                     //Debug.WriteLine("creating playlist status"+ check.is_playlist_exist(playlist, plya_list_name_creator_listbox.Text));
                     playlist.Add(new PlayList(fi.Name.Replace(".txt", "")));
@@ -136,7 +209,7 @@ namespace MSCPLAYER
                 }
 
 
-                Debug.WriteLine(fi.Name);
+                //Debug.WriteLine(fi.Name);
                 string line;
 
                 // Read the file and display it line by line.  
@@ -145,12 +218,13 @@ namespace MSCPLAYER
                 while ((line = file.ReadLine()) != null)
                 {
                     playlist[playlist.Count - 1].playlist.Add(line);
-                    Debug.WriteLine(line);
+                    //Debug.WriteLine(line);
                 }
 
                 file.Close();
             }
         }
+
         private void Music_list_ItemDelete_Click(object sender, RoutedEventArgs e)
         {
 
@@ -179,10 +253,12 @@ namespace MSCPLAYER
                             playlist[i].playlist.Add(selected_song);
 
                            // Debug.WriteLine($"item in a list {playlist[i].playlist.Count}");
+                           /*
                             foreach (string dupa in playlist[i].playlist)
                             {
                                 Debug.WriteLine(dupa);
                             }
+                           */
                         }
                     }
                     music_list_add_listbox_contextmenu.UnselectAll();
@@ -203,7 +279,7 @@ namespace MSCPLAYER
         private void Music_list_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int selected_index = music_list.SelectedIndex;
-            string selected_item = music_list.SelectedItem.ToString();
+             string selected_item = music_list.SelectedItem.ToString();
             mp.play_music(Path_Music+selected_item, ref Time_Slider);
             music_list.Items.MoveCurrentToPosition(selected_index);
         }
@@ -299,12 +375,62 @@ namespace MSCPLAYER
 
         private void Delete_Listbox_playlist_menuitem_Click(object sender, RoutedEventArgs e)
         {
+            if (Listbox_playlist.SelectedItem.ToString() != "all_songs" && current_playlist != Listbox_playlist.SelectedItem.ToString())
+            {
+            
+                for (int i = 0; i < playlist.Count(); i++)
+                {
+                    if (playlist[i].playlist_name == Listbox_playlist.SelectedItem.ToString())
+                    {
+                        if(File.Exists($"{Listbox_playlist.SelectedItem.ToString()}.txt"))
+                        {
+                            File.Delete($"{Listbox_playlist.SelectedItem.ToString()}.txt");
+                        }
+                        //playlist.Remove(Listbox_playlist.SelectedItem.ToString());
+                        Debug.WriteLine(playlist[i].playlist_name);
+                        playlist.RemoveAt(i);
+                    }
+                }
 
+                //TODO jeżeli current_playlist == Listbox_playlist.SelectedItem.ToString() to ma się przełączyć na all_songs po czym usunąć tę konkretną playlistę
+                //TODO coś nie działa przełączanie do pierwszej piosenki kiedy playista jest inna niż all_songs
+            }
         }
-
+        private void Remove_PlayList()
+        {
+           
+        }
         private void Listbox_playlist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            
+            current_playlist = Listbox_playlist.SelectedItem.ToString();
+            Expander_playlist.Header = current_playlist;
+            if (current_playlist != "all_songs")
+            {
+                music_list.Items.Clear();
+                foreach(var pl in playlist)
+                {
+                    if(pl.playlist_name == current_playlist)
+                    {
+                        foreach(string songs in pl.playlist)
+                        {
+                            music_list.Items.Add(songs);
+                        }
+                    }
+                }
+                //mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
+            }
+            else
+            {
+                //Debug.WriteLine("duppa");
+                foreach (var songs in all_music_list)
+                {
+                    music_list.Items.Add(songs);
+                }
+            }
+            //Debug.WriteLine(current_playlist);
+            music_list.Items.MoveCurrentToPosition(0);
+            mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
         }
 
         private void Listbox_playlist_SelectionChanged_1(object sender, SelectionChangedEventArgs e)

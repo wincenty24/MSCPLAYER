@@ -22,6 +22,7 @@
                     <Expander x:Name="Expander_playlist" Header="wszystkie piosenki" Expanded="Expander_playlist_Expanded" HorizontalAlignment="Left" Height="208" Margin="577,58,0,0" VerticalAlignment="Top" Width="182">
                         <StackPanel Background="#FFE5E5E5">
                             <ListBox Height="186" x:Name="Listbox_playlist"  SelectionMode="Single"  MouseDoubleClick="Listbox_playlist_MouseDoubleClick" Margin="0,0,0.2,0" SelectionChanged="Listbox_playlist_SelectionChanged_1" >
+                                
                                 <ListBox.ContextMenu>
                                     <ContextMenu>
                                         <TextBox x:Name="plya_list_name_creator_listbox" Text="" Width="100"></TextBox>
@@ -48,6 +49,7 @@
                     </Slider>
                     <Slider x:Name="Time_Slider" Thumb.DragCompleted="Time_Slider_DragCompleted" Thumb.DragStarted="Time_Slider_DragStarted" ValueChanged="Time_Slider_ValueChanged"  Margin="19,271,413,93"/>
                     <ListBox x:Name="music_list" ContextMenuOpening="Music_list_ContextMenuOpening" HorizontalAlignment="Left" FontSize="13" Height="208" Margin="5,58,0,0" VerticalAlignment="Top" Width="376" ItemsSource="{Binding YourItems}" SelectedItem="{Binding SelectedItem}"   MouseDoubleClick="Music_list_MouseDoubleClick" MouseRightButtonDown="Music_list_MouseRightButtonDown" SelectionChanged="Music_list_SelectionChanged" Background="Transparent" >
+                        
                         <ListBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="usuń" Click="Music_list_ItemDelete_Click"/>
