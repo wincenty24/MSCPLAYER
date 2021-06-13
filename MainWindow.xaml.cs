@@ -42,22 +42,28 @@ namespace MSCPLAYER
         {
 
             current_playlist = Properties.Settings.Default.save_last_playlist;
-            
+            Debug.WriteLine(current_playlist);
             Listbox_playlist.Items.Add("all_songs");
             if (current_playlist == "all_songs")
                 Load_music_to_list();
-
+            
             read_songs_from_txt();
+            // {
+
+            //}
+
+
+            load_to_music_list(ref music_list);
+
+            load_last_song_from_memory(ref music_list, Properties.Settings.Default.save_last_song);
 
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
            
-            load_to_music_list(ref music_list);
 
-            load_last_song_from_memory(ref music_list, Properties.Settings.Default.save_last_song);
         
-            mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
+            //mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
 
 
         }
@@ -83,11 +89,14 @@ namespace MSCPLAYER
         public void load_to_music_list(ref ListBox listbox)
         {
             Checker checker = new Checker();
-            if (checker.is_playlist_exist(playlist, current_playlist))
+
+            Debug.WriteLine(checker.is_playlist_exist(playlist, current_playlist));
+            if (!checker.is_playlist_exist(playlist, current_playlist))
             {
                 Expander_playlist.Header = current_playlist;
                 foreach (var pl in playlist)
                 {
+                    Debug.WriteLine(pl);
                     if (pl.playlist_name == current_playlist)
                     {
                         foreach (string song in pl.playlist)
@@ -127,9 +136,7 @@ namespace MSCPLAYER
             if ((music_list.Items.Count > 0) && (mp.media_player.Source != null))
             {
                 Current_music_label.Content = $"Now is playing - {music_list.Items.CurrentItem}";
-               Debug.WriteLine(music_list.Items.CurrentItem);
-               Debug.WriteLine(music_list.Items.CurrentPosition);
-               Debug.WriteLine("=================================================================================");
+
                 mp.assigne_mp_time(Time_Slider);
                 //Time_Slider.Value = mediaPlayer.Position.TotalSeconds;
                 if (mp.media_player.NaturalDuration.HasTimeSpan)
@@ -194,20 +201,21 @@ namespace MSCPLAYER
        }
         private void read_songs_from_txt()
         {
-            DirectoryInfo di = new DirectoryInfo(@"C:\Users\wince\Desktop\MSCPLAYER\bin\Debug\");
+            DirectoryInfo di = new DirectoryInfo(@"" + Path_Music);
             foreach (var fi in di.GetFiles("*.txt*"))
             {
                 //all_music_list.Add(fi.Name);
-                
+                Debug.WriteLine(fi.Name.Replace(".txt", ""));
                 Checker check = new Checker();
-                if (  check.is_playlist_exist(playlist, fi.Name.Replace(".txt","")))
-                {
+                //if (check.is_playlist_exist(playlist, fi.Name.Replace(".txt","")))
+                //{
                     //Debug.WriteLine("creating playlist status"+ check.is_playlist_exist(playlist, plya_list_name_creator_listbox.Text));
+                    Debug.WriteLine($"123 {fi.Name.Replace(".txt", "")}");
                     playlist.Add(new PlayList(fi.Name.Replace(".txt", "")));
                     Listbox_playlist.Items.Add(fi.Name.Replace(".txt", ""));
                     music_list_add_listbox_contextmenu.Items.Add(fi.Name.Replace(".txt", ""));
                     //playlist[playlist.Count - 1].playlist_name = plya_list_name_creator_listbox.Text;
-                }
+                //}
 
 
                 //Debug.WriteLine(fi.Name);
@@ -215,11 +223,12 @@ namespace MSCPLAYER
 
                 // Read the file and display it line by line.  
                 System.IO.StreamReader file =
-                    new System.IO.StreamReader($@"C:\Users\wince\Desktop\MSCPLAYER\bin\Debug\{fi.Name}");
+                    new System.IO.StreamReader($@"{Path_Music + fi.Name}");
                 while ((line = file.ReadLine()) != null)
                 {
+
                     playlist[playlist.Count - 1].playlist.Add(line);
-                    //Debug.WriteLine(line);
+                    //Debug.WriteLine(line, playlist.Count-1);
                 }
 
                 file.Close();
@@ -252,7 +261,6 @@ namespace MSCPLAYER
                         {
                             //Debug.WriteLine($"selected playlis{selected_playlist} {playlist[i].playlist_name}");
                             playlist[i].playlist.Add(selected_song);
-
                            // Debug.WriteLine($"item in a list {playlist[i].playlist.Count}");
                            /*
                             foreach (string dupa in playlist[i].playlist)
