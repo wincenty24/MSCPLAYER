@@ -63,7 +63,7 @@ namespace MSCPLAYER
            
 
         
-            //mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
+            mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
 
 
         }
@@ -391,13 +391,19 @@ namespace MSCPLAYER
                 {
                     if (playlist[i].playlist_name == Listbox_playlist.SelectedItem.ToString())
                     {
-                        if(File.Exists($"{Listbox_playlist.SelectedItem.ToString()}.txt"))
+                        if(File.Exists($"{Path_Music+ Listbox_playlist.SelectedItem.ToString()}.txt"))
                         {
-                            File.Delete($"{Listbox_playlist.SelectedItem.ToString()}.txt");
+                            File.Delete($"{Path_Music+Listbox_playlist.SelectedItem.ToString()}.txt");
                         }
                         //playlist.Remove(Listbox_playlist.SelectedItem.ToString());
                         Debug.WriteLine(playlist[i].playlist_name);
                         playlist.RemoveAt(i);
+                        foreach(var x in playlist)
+                        {
+                            Debug.WriteLine(x.playlist_name);
+                        }
+                        Listbox_playlist.Items.Remove(Listbox_playlist.SelectedItem.ToString());
+                        Listbox_playlist.Items.Refresh();
                     }
                 }
 
@@ -414,6 +420,7 @@ namespace MSCPLAYER
             
             current_playlist = Listbox_playlist.SelectedItem.ToString();
             Expander_playlist.Header = current_playlist;
+            music_list.Items.Clear();
             if (current_playlist != "all_songs")
             {
                 music_list.Items.Clear();
@@ -439,7 +446,7 @@ namespace MSCPLAYER
             }
             //Debug.WriteLine(current_playlist);
             music_list.Items.MoveCurrentToPosition(0);
-            mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
+            //mp.play_music(Path_Music + music_list.Items[music_list.Items.CurrentPosition].ToString(), ref Time_Slider);
         }
 
         private void Listbox_playlist_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
