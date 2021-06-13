@@ -121,7 +121,6 @@
                                 <TextBox x:Name="plya_list_name_creator_listbox" Text="" Width="100"/>
                                 <MenuItem x:Name="add_Listbox_playlist_menuitem" Header="Add" Click="add_Listbox_playlist_menuitem_Click_1"/>
                                 <MenuItem x:Name="delete_Listbox_playlist_menuitem" Header="Delete" Click="Delete_Listbox_playlist_menuitem_Click"/>
-
                             </ContextMenu>
                         </ListBox.ContextMenu>
                     </ListBox>
