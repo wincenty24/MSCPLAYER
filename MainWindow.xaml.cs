@@ -16,6 +16,7 @@ using System.Threading;
 using System.IO;
 using System.Windows.Threading;
 using System.Diagnostics;
+using VideoLibrary;
 namespace MSCPLAYER
 {
     /// <summary>
@@ -32,7 +33,8 @@ namespace MSCPLAYER
         Sort_TYPE.Sort sort_type = new Sort_TYPE.Sort();
         MP mp = new MP();
         List<PlayList> playlist = new List<PlayList>();
-        string current_playlist = "all_songs"; 
+        string current_playlist = "all_songs";
+        string URI = "";
         public MainWindow()
         {
             InitializeComponent();
@@ -188,11 +190,12 @@ namespace MSCPLAYER
        {
             foreach(var item in playlist)
             {
-                using (TextWriter tw = new StreamWriter($"{item.playlist_name}.txt"))
+                using (TextWriter tw = new StreamWriter($@"{Path_Music}{item.playlist_name}.txt"))
                 {
 
                     foreach (string songs in item.playlist)
                     {
+                        Debug.WriteLine(songs);
                         tw.WriteLine(songs);
                     }
                 }
@@ -237,7 +240,30 @@ namespace MSCPLAYER
 
         private void Music_list_ItemDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            if (current_playlist != "all_songs")
+            {
+                
+                
+                
+                foreach (var x in playlist)
+                {
+                    if (x.playlist_name == current_playlist)
+                    {
+                        foreach (var song in x.playlist)
+                        {
+                            if(song == music_list.SelectedItem.ToString())
+                            {
+                                Debug.WriteLine($"asdasd{song} {music_list.SelectedItem.ToString()}");
+                                x.playlist.Remove(song);
+                                music_list.Items.Remove(music_list.SelectedItem.ToString());
+                                music_list.Items.Refresh();
+                                break;
+                            }
+                            
+                        }
+                    }
+                }
+            }
         }
 
         private void Music_list_add_listbox_contextmenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -522,7 +548,31 @@ namespace MSCPLAYER
             Volume_Slider.Value=0;
         }
 
+        private void Dowload_button_Click(object sender, RoutedEventArgs e)
+        {
+            Thread download_thread = new Thread(thread_download);
 
+            URI = url_text_box.Text;
+            download_thread.Start();
+        }
+        protected void thread_download()
+        {
+            mkdir_video();
+
+            Debug.WriteLine(mp.is_video_downloading);
+            if ((URI != "") && !mp.is_video_downloading)
+                mp.download_mp4(URI, $@"{Path_Music}video\", $@"{Path_Music}");
+
+
+        }
+        protected void mkdir_video()
+        {
+            string target_folder = $"{Path_Music}video";
+            if (!Directory.Exists(target_folder))
+            {
+                Directory.CreateDirectory(target_folder);
+            }
+        }
     }
 
 }
