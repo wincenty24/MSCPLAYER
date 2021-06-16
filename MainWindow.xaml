@@ -117,15 +117,15 @@
         </Grid>
         <Grid Margin="0,0,10,9.6" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <TextBox Text="Search box" x:Name="search_box" Margin="277,36,409,387" />
-            <Expander x:Name="sort_expander"  Header="Sort" Foreground="White" Margin="523,58,85,316" Background="#FF0F0F2D" >
+            <Expander x:Name="sort_expander"  Header="Sort" Foreground="White" Margin="523,58,85,314" Background="#FF0F0F2D" >
                 <StackPanel>
                     <Button x:Name="by_title_sort_button" Content="By title" Click="By_title_sort_button_Click" Height="20" Margin="0,0,-0.2,0"></Button>
                     <Button x:Name="by_author_sort_button" Content="By author" Click="By_author_sort_button_Click"  Height="20" Margin="0,0,-0.2,0"></Button>
                 </StackPanel>
             </Expander>
-            <Expander x:Name="Expander_playlist" Header="Playlists" Foreground="White" Expanded="Expander_playlist_Expanded" HorizontalAlignment="Left" Height="191" Margin="523,153,0,0" VerticalAlignment="Top" Width="182" Background="#FF0F0F2D">
-                <StackPanel Background="#FFE5E5E5">
-                    <ListBox Height="172" x:Name="Listbox_playlist"  SelectionMode="Single"  MouseDoubleClick="Listbox_playlist_MouseDoubleClick" Margin="0,0,-0.2,0" SelectionChanged="Listbox_playlist_SelectionChanged_1" Background="#FF0F0F2D" >
+            <Expander x:Name="Expander_playlist" Header="Playlists" Foreground="White" Expanded="Expander_playlist_Expanded" HorizontalAlignment="Left" Height="141" Margin="523,153,0,0" VerticalAlignment="Top" Width="182" Background="#FF0F0F2D">
+                <StackPanel>
+                    <ListBox Height="111" x:Name="Listbox_playlist"  SelectionMode="Single"  MouseDoubleClick="Listbox_playlist_MouseDoubleClick" Margin="0,0,-0.2,0" SelectionChanged="Listbox_playlist_SelectionChanged_1" Background="#FF0F0F2D" Foreground="White" >
                         <ListBox.ContextMenu>
                             <ContextMenu>
                                 <TextBox x:Name="plya_list_name_creator_listbox" Text="" Width="100"/>
@@ -169,6 +169,7 @@
                 </ListBox.ContextMenu>
             </ListBox>
             <ToggleButton x:Name="toggle_button_play_stop" Content = "⏸️" FontSize="20" Background="#FF0F0F2D" Checked="Toggle_button_play_stop_Checked" Unchecked="Toggle_button_play_stop_Unchecked"  Margin="156,299,589,96" RenderTransformOrigin="0.5,0.504" Width="45" Foreground="White" BorderThickness="0"/>
+            <Label x:Name="Song_time_label" Content="00:00:00" HorizontalAlignment="Left" Margin="62,309,0,0" VerticalAlignment="Top" RenderTransformOrigin="-7.25,0.48" Foreground="White" Width="39" MaxWidth="39" Height="26"/>
         </Grid>
     </Grid>
 </Window>
