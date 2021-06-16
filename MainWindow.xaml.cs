@@ -136,7 +136,7 @@ namespace MSCPLAYER
             if ((music_list.Items.Count > 0) && (mp.media_player.Source != null))
             {
                 Current_music_label.Content = $"Now is playing - {music_list.Items.CurrentItem}";
-
+                Song_time_label.Content = $"{TimeSpan.FromMinutes(Time_Slider.Value)}";
                 mp.assigne_mp_time(Time_Slider);
                 //Time_Slider.Value = mediaPlayer.Position.TotalSeconds;
                 if (mp.media_player.NaturalDuration.HasTimeSpan)
