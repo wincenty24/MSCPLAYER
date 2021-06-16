@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
-
+using VideoLibrary;
 namespace MSCPLAYER
 {
    
@@ -22,7 +22,7 @@ namespace MSCPLAYER
         {
        
         }
-
+        public bool is_video_downloading = false;
         public void load_to_list(ref List<string> list, ref ListBox musiclist, Sort_TYPE.Sort sort, string music_path)
        {
             DirectoryInfo di = new DirectoryInfo(@"" + music_path);
@@ -101,6 +101,40 @@ namespace MSCPLAYER
             slider.Value = 0;
             string current_song = listbox.Items[next_position].ToString();
             this.play_music(@"" + path + current_song, ref slider);
+        }
+        public void download_mp4(string url, string dir_video,string dir_mp3)
+        {
+
+            try
+            {
+
+                is_video_downloading = true;
+                var youTube = YouTube.Default; // starting point for YouTube actions
+                var video = youTube.GetVideo(url); // gets a Video object with info about the video
+                File.WriteAllBytes($@"{dir_video}" + video.FullName, video.GetBytes());
+                try
+                {
+                    string music_namee = video.FullName.Replace("- YouTube.mp4", "");
+                    var convert = new NReco.VideoConverter.FFMpegConverter();
+                    convert.ConvertMedia(dir_video + video.FullName, dir_mp3 + music_namee + ".mp3", "mp3");
+                    MessageBox.Show("Succeed");
+                }
+                catch
+                {
+                    MessageBox.Show("error->convert");
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("Video has not downloaded ");
+            }
+            finally
+            {
+                
+
+                is_video_downloading = false;
+            }
         }
 
     }

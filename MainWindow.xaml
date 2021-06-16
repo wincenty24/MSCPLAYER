@@ -66,6 +66,8 @@
                 </Button.Background>
 
             </Button>
+            <TextBox x:Name="url_text_box" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="40,357,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="160"/>
+            <Button Content="Download" x:Name="Dowload_button" Click="Dowload_button_Click" Grid.Column="1" HorizontalAlignment="Left" Margin="40,385,0,0" VerticalAlignment="Top" Width="65" Height="30"/>
         </Grid>
         <Grid Grid.Column="1"
               Grid.Row="2"
