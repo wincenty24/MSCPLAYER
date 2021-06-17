@@ -55,6 +55,7 @@
                 </Button.Background>
 
             </Button>
+            <Label x:Name="Song_time_label" Content="00:00:00" HorizontalAlignment="Left" Margin="62,309,0,0" VerticalAlignment="Top" RenderTransformOrigin="-7.25,0.48" Foreground="White" Width="39" MaxWidth="39" Height="26"/>
             <Button x:Name="Minimize_button" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="345,3,0,0" VerticalAlignment="Top" Width="20" Click="Minimize_button_Click" Foreground="{x:Null}" BorderBrush="{x:Null}">
                 <Button.Background>
                     <ImageBrush ImageSource="icons8-macos-minimize-96.png"/>
@@ -116,7 +117,7 @@
             </StackPanel>
         </Grid>
         <Grid Margin="0,0,10,9.6" Grid.RowSpan="2" Grid.ColumnSpan="2">
-            <TextBox Text="Search box" x:Name="search_box" Margin="277,36,409,387" />
+           
             <Expander x:Name="sort_expander"  Header="Sort" Foreground="White" Margin="523,58,85,316" Background="#FF0F0F2D" >
                 <StackPanel>
                     <Button x:Name="by_title_sort_button" Content="By title" Click="By_title_sort_button_Click" Height="20" Margin="0,0,-0.2,0"></Button>

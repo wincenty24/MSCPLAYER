@@ -42,7 +42,7 @@ namespace MSCPLAYER
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
             current_playlist = Properties.Settings.Default.save_last_playlist;
             Debug.WriteLine(current_playlist);
             Listbox_playlist.Items.Add("all_songs");
@@ -125,6 +125,7 @@ namespace MSCPLAYER
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            Song_time_label.Content = $"{TimeSpan.FromMinutes(Time_Slider.Value)}";
 
             try
             {
